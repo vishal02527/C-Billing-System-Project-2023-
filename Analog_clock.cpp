@@ -20,7 +20,8 @@ void main()
       else
       outtextxy(x+(r-14)*cos(M_PI/6*i)-20,y-(r-14)*sin(M_PI/6*i)-26,n[i]);
    }
-
+   gettime(&t);
+   printf("The current time is: %2d:%0.2d:%0.2d:%0.2d",t.ti_hour,t.ti_min,t.ti_sec,t.ti_hund);
    while(!kbhit())
    {
        setcolor(5);
