@@ -1,4 +1,4 @@
-			//BANK MANAGEMENT PROJECT IN C++
+			//BANK MANAGEMENT SYSTEM PROJECT IN C++
 
 #include<iostream.h>
 #include<conio.h>
@@ -13,41 +13,43 @@
 class Log
 {
    private:
-	   char user_name[20], pass[8];
-	   char ent_user_name[20], epass[8];
+	   char user_name[20], pass[7];
+	   char ent_user_name[20], epass[7];
 
    public:
 	   void Register()
 	   {
 	       cout<<"Register user name: ";
-	       cin>>user_name;
+	       fflush(stdin);
+	       gets(user_name);
 
-	       cout<<"Create your password: ";
+	       cout<<"Create your password[6 characters long]: ";
 	       cin>>pass;
 	   }
 
 	   int log_in()
 	   {
 	       cout<<"\nConfirm registered user name: ";
-	       cin>>ent_user_name;
-	       cout<<"Confirm your password: ";
+	       fflush(stdin);
+	       gets(ent_user_name);
+	       cout<<"Confirm your password[6 characters long]: ";
 	       cin>>epass;
 
 	       if(strcmp(user_name,ent_user_name)==0 && strcmp(pass,epass)==0)
-	       goto x;
+		 goto x;
 	       else
-	       goto y;
+		 goto y;
 
 	       x:
 		{
 		  cout<<"\nLogged in successfully..."<<endl;
 		  cout<<"You can access the program now."<<endl;
-	       }
-	       getch();
-	       return 0;
+		}
+		getch();
+		return 0;
 
 	       y:
-		  cout<<"\nWrong name and password."<<endl;
+		  cout<<"\nMay be you entered wrong name or password."<<endl;
 		  getch();
 
 		  exit(0);
@@ -61,8 +63,8 @@ class Bank
 {
    private:
 	   double balance, amt;
-	   long acc_no, phone_no;
-	   char name[20], add[30];
+	   long acc_no;
+	   char name[20], add[30], phone_no[10];
 	   char acc_type;
    public:
 	   void new_acc();
@@ -71,7 +73,7 @@ class Bank
 	   int deposit(long);
 	   int widthraw(long);
 	   int balance_enq(long);
-	   void close_acc();
+	   int close_acc(long);
 	   void view_list();
 	   void intro();
 };
@@ -246,21 +248,11 @@ int Bank:: balance_enq(long a)
 
 //TO CLOSE AN EXISTING ACCOUNT.
 
-void Bank:: close_acc()
+int Bank:: close_acc(long a)
 {
    char close;
-   long a;
 
-   cout<<"\nEnter account number of the customer whose account you want to close: ";
-   cin>>a;
-
-   if(a!=acc_no)
-   {
-      cout<<"\n\n\nPlease give a valid account number!"<<endl;
-      getch();
-   }
-
-   else
+   if(a == acc_no)
    {
       cout<<"\n\tName of customer: "<<name<<endl;
 
@@ -270,30 +262,31 @@ void Bank:: close_acc()
 
 	    if(close=='y' || close=='Y')
 	    {
-	       acc_no=0;
+	       acc_no = 0;
 	       cout<<"\nAccount has been closed!\n";
 	    }
-
 	    else
 	    if(close=='n' || close=='N')
 	    {
-	       intro();
+	       return 0;
 	    }
-
 	    else
 	    {
 	       cout<<"\nSorry invalid input!";
 	       getch();
 	       goto retry3;
 	    }
+
+      return 1;
    }//Termination of else statement.
+   return 0;
 }
 
 //TO VIEW THE LIST OF THE CUSTOMERS.
 
 void Bank:: view_list()
 {
-   if(acc_no!=0)
+   if(acc_no != 0)
    cout<<acc_no<<"\t\t "<<name<<"\t  "<<acc_type<<"\t  "<<balance<<endl;
 }
 
@@ -301,12 +294,12 @@ void Bank:: view_list()
 
 void Bank:: intro()
 {
-   cout<<"\This project has been made by VISHAL(MSC-CS)."<<endl;
+   cout<<"\This project has been created by VISHAL KUMAR(MSC-CS)."<<endl;
    cout<<"Session: 2022-2024"<<endl;
    cout<<"This took almost 1 month to be completed."<<endl<<endl;
 
    cout<<"This project is about the bank management system in which some important services are written like how new accounts create, modify, process of transaction(deposit and widthraw) and many other services related to bank."<<endl<<endl;
-   cout<<"\nI would like to thanks my parents, my Supreme Lord Shree krishna and my teachers who supported me to complete such a wonderful project."<<endl;
+   cout<<"\nI would like to thanks my parents, my Supreme Lord and my teachers who supported me to complete such a wonderful project."<<endl;
 }
 
 int main()
@@ -316,13 +309,13 @@ int main()
    //LOADING PART
 
    int gd=DETECT, gm, i;
-   initgraph(&gd,&gm,"C:\TURBOC3\BGI");
+   initgraph(&gd,&gm," ");
    for(i=0;i<=360;i++)
    {
       circle(300,200,80);
       pieslice(300,200,0,i,80);
       outtextxy(220,320,"Loading please wait...");
-      delay(10);
+      delay(5);
    }
    closegraph();
 
@@ -447,26 +440,26 @@ int main()
 
 	 case 7:
 	 cout<<endl<<"7. Close account."<<endl;
-	 cout<<"How many accounts do you want to close? ";
-	 cin>>cust;
+	 cout<<"\nEnter account number of the customer whose account you want to close: ";
+	 cin>>a;
 
 	 for(count=0;count<cust;count++)
 	 {
-	    b[count].close_acc();
+	    b[count].close_acc(a);
 	 }
 	 break;
 
 	 case 8:
 	 cout<<endl<<"8. View list."<<endl;
 	 cout<<"\n\n\t\tAccount holder list\n\n";
-	 cout<<"============================================\n";
-	 cout<<"account no\t name\t type\t balance\n\n";
+	 cout<<"================================================\n";
+	 cout<<"account no\t name\t\t type\t balance\n\n";
 
 	 for(count=0;count<cust;count++)
 	 {
 	    b[count].view_list();
 	 }
-	 cout<<"============================================\n";
+	 cout<<"================================================\n";
 	 cout<<"These were all records.\n";
 	 break;
 
