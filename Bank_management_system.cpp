@@ -294,7 +294,7 @@ void Bank:: view_list()
 
 void Bank:: intro()
 {
-   cout<<"\This project has been created by VISHAL KUMAR(MSC-CS)."<<endl;
+   cout<<"\nThis project has been created by VISHAL KUMAR(MSC-CS)."<<endl;
    cout<<"Session: 2022-2024"<<endl;
    cout<<"This took almost 1 month to be completed."<<endl<<endl;
 
